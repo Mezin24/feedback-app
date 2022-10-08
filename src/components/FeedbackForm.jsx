@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import RatingSelect from './RatingSelect';
 import Card from './UI/Card';
 import Button from './UI/Button';
 
-const FeedbackForm = () => {
+const FeedbackForm = ({ onAddNewFeedback }) => {
   const [textInput, setTextInput] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState('');
@@ -34,19 +35,25 @@ const FeedbackForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(textInput);
-    setTextInput('');
-  };
 
-  const hadleRatingChange = (value) => {
-    setRating(value);
+    const newFeedback = {
+      id: uuidv4(),
+      rating,
+      text: textInput,
+    };
+
+    onAddNewFeedback(newFeedback);
+    setTextInput('');
   };
 
   return (
     <Card>
       <h2>How would you rate your service with us?</h2>
       <form onSubmit={handleSubmit}>
-        <RatingSelect rating={rating} hadleRatingChange={hadleRatingChange} />
+        <RatingSelect
+          rating={rating}
+          hadleRatingChange={(value) => setRating(value)}
+        />
         <div className='input-group'>
           <input type='text' value={textInput} onChange={handleChange} />
           <Button type='submit' disabled={btnDisabled}>
