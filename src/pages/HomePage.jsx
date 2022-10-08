@@ -4,12 +4,12 @@ import FeedbackStats from '../components/FeedbackStats';
 import FeedbackList from '../components/FeedbackList';
 import AboutIconLink from '../components/AboutIconLink';
 
-const HomePage = ({ onAddNewFeedback, feedback, onDeleteFeedback }) => {
+const HomePage = () => {
   return (
     <>
-      <FeedbackForm onAddNewFeedback={onAddNewFeedback} />
-      <FeedbackStats feedback={feedback} />
-      <FeedbackList feedback={feedback} onDeleteFeedback={onDeleteFeedback} />
+      <FeedbackForm />
+      <FeedbackStats />
+      <FeedbackList />
       <AboutIconLink />
     </>
   );

@@ -3,12 +3,14 @@ import { v4 as uuidv4 } from 'uuid';
 import RatingSelect from './RatingSelect';
 import Card from './UI/Card';
 import Button from './UI/Button';
+import { useFeedbackContext } from '../context/feedbackContext';
 
-const FeedbackForm = ({ onAddNewFeedback }) => {
+const FeedbackForm = () => {
   const [textInput, setTextInput] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState('');
   const [rating, setRating] = useState(10);
+  const { addNewFeedback } = useFeedbackContext();
 
   useEffect(() => {
     setMessage('');
@@ -42,7 +44,7 @@ const FeedbackForm = ({ onAddNewFeedback }) => {
       text: textInput,
     };
 
-    onAddNewFeedback(newFeedback);
+    addNewFeedback(newFeedback);
     setTextInput('');
   };
 

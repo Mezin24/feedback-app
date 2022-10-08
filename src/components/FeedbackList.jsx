@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
 import FeedbackItem from './Feedbackitem';
+import { useFeedbackContext } from '../context/feedbackContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const FeedbackList = ({ feedback, onDeleteFeedback }) => {
+const FeedbackList = () => {
+  const { feedback } = useFeedbackContext();
+
   if (!feedback || feedback.length === 0) {
     return <p style={{ textAlign: 'center' }}>No Feedback Yet</p>;
   }
@@ -17,11 +20,7 @@ const FeedbackList = ({ feedback, onDeleteFeedback }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <FeedbackItem
-              key={item.id}
-              {...item}
-              onDeleteFeedback={onDeleteFeedback}
-            />
+            <FeedbackItem key={item.id} {...item} />
           </motion.div>
         ))}
       </AnimatePresence>
