@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import Header from './components/Header';
+import Layout from './pages/Layout';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
 import FeedbackData from './data';
-import FeedbackList from './components/FeedbackList';
-import FeedbackStats from './components/FeedbackStats';
-import FeedbackForm from './components/FeedbackForm';
+import { Routes, Route } from 'react-router-dom';
 
 const App = () => {
   const [feedback, setFeedback] = useState(FeedbackData);
@@ -21,14 +21,21 @@ const App = () => {
   };
 
   return (
-    <>
-      <Header />
-      <div className='container'>
-        <FeedbackForm onAddNewFeedback={addNewFeedback} />
-        <FeedbackStats feedback={feedback} />
-        <FeedbackList feedback={feedback} onDeleteFeedback={deleteFeedback} />
-      </div>
-    </>
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route
+          index
+          element={
+            <HomePage
+              onAddNewFeedback={addNewFeedback}
+              feedback={feedback}
+              onDeleteFeedback={deleteFeedback}
+            />
+          }
+        />
+        <Route path='about' element={<AboutPage />} />
+      </Route>
+    </Routes>
   );
 };
 
