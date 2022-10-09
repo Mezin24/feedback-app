@@ -10,7 +10,17 @@ const FeedbackForm = () => {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState('');
   const [rating, setRating] = useState(10);
-  const { addNewFeedback } = useFeedbackContext();
+  const { addNewFeedback, feedbackEdit, updateFeedback } = useFeedbackContext();
+
+  useEffect(() => {
+    setBtnDisabled(false);
+    setTextInput(feedbackEdit.feedback.text);
+    if (feedbackEdit.feedback.rating) {
+      setRating(feedbackEdit.feedback.rating);
+    } else {
+      setRating(10);
+    }
+  }, [feedbackEdit]);
 
   useEffect(() => {
     setMessage('');
@@ -39,12 +49,17 @@ const FeedbackForm = () => {
     e.preventDefault();
 
     const newFeedback = {
-      id: uuidv4(),
       rating,
       text: textInput,
     };
 
-    addNewFeedback(newFeedback);
+    if (feedbackEdit.edit) {
+      updateFeedback(feedbackEdit.feedback.id, newFeedback);
+    } else {
+      newFeedback.id = uuidv4();
+      addNewFeedback(newFeedback);
+    }
+
     setTextInput('');
   };
 
