@@ -1,4 +1,5 @@
 const RatingSelect = ({ rating, hadleRatingChange }) => {
+  s;
   return (
     <ul className='rating'>
       {Array.from({ length: 10 }, (_, i) => {

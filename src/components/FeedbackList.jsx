@@ -2,15 +2,18 @@ import PropTypes from 'prop-types';
 import FeedbackItem from './Feedbackitem';
 import { useFeedbackContext } from '../context/feedbackContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import Spinner from '../components/UI/Spinner';
 
 const FeedbackList = () => {
-  const { feedback } = useFeedbackContext();
+  const { feedback, isLoading } = useFeedbackContext();
 
-  if (!feedback || feedback.length === 0) {
+  if (!isLoading && (!feedback || feedback.length === 0)) {
     return <p style={{ textAlign: 'center' }}>No Feedback Yet</p>;
   }
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <div className='feedback-list'>
       <AnimatePresence>
         {feedback.map((item) => (

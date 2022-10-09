@@ -15,16 +15,13 @@ const FeedbackForm = () => {
   useEffect(() => {
     setBtnDisabled(false);
     setTextInput(feedbackEdit.feedback.text);
-    if (feedbackEdit.feedback.rating) {
-      setRating(feedbackEdit.feedback.rating);
-    } else {
-      setRating(10);
-    }
+    setRating(feedbackEdit.feedback.rating);
   }, [feedbackEdit]);
 
   useEffect(() => {
     setMessage('');
     setBtnDisabled(true);
+    if (!textInput) return;
     const timer = setTimeout(() => {
       if (textInput.trim() === '') {
         setBtnDisabled(true);
@@ -48,6 +45,8 @@ const FeedbackForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!rating || !textInput) return;
+
     const newFeedback = {
       rating,
       text: textInput,
@@ -56,7 +55,6 @@ const FeedbackForm = () => {
     if (feedbackEdit.edit) {
       updateFeedback(feedbackEdit.feedback.id, newFeedback);
     } else {
-      newFeedback.id = uuidv4();
       addNewFeedback(newFeedback);
     }
 
